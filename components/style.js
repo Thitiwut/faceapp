@@ -53,6 +53,6 @@ export default StyleSheet.create({
     textAlign: 'center',
     fontWeight: '700',
     fontSize: 18,
-    color: 'white',
+    color: 'black',
   },
 });
