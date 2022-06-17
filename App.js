@@ -37,16 +37,16 @@ export default function App() {
         isHost ? ClientRole.Broadcaster : ClientRole.Audience,
       );
 
-      AgoraEngine.current.addListener('UserJoined', (uid, reason) => {
-        console.log('UserJoined', uid, reason);
-        setPeerIds(peerIds.filter(id => id !== uid));
-      });
-
-      AgoraEngine.current.addListener('UserOffline', (uid, elapsed) => {
-        console.log('JoinChannelSuccess', uid, elapsed);
+      AgoraEngine.current.addListener('UserJoined', (uid, elapsed) => {
+        console.log('UserJoined', uid, elapsed);
         if (peerIds.indexOf(uid) === -1) {
           setPeerIds([...peerIds, uid]);
         }
+      });
+
+      AgoraEngine.current.addListener('UserOffline', (uid, reason) => {
+        console.log('UserOffline', uid, reason);
+        setPeerIds(peerIds.filter(id => id !== uid));
       });
 
       AgoraEngine.current.addListener(
@@ -58,7 +58,7 @@ export default function App() {
       );
     };
     init();
-  }, [isHost, joinSucceed, peerIds]);
+  }, [isHost, peerIds]);
 
   const onSwitchCamera = () => AgoraEngine.current.switchCamera();
 
